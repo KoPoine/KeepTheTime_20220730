@@ -14,12 +14,21 @@ interface APIList {
         @Query("value") value : String
     ) : Call<BasicResponse>
 
+//    회원가입
     @FormUrlEncoded
     @PUT ("/user")
     fun getRequestSignUp (
         @Field ("email") email : String,
         @Field ("password") password : String,
         @Field ("nick_name") nick : String
+    ) : Call<BasicResponse>
+
+//    로그인
+    @FormUrlEncoded
+    @POST ("/user")
+    fun getRequestLogin (
+        @Field ("email") email: String,
+        @Field ("password") password: String
     ) : Call<BasicResponse>
 
 }
