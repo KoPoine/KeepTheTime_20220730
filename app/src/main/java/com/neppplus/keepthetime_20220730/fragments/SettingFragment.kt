@@ -64,6 +64,23 @@ class SettingFragment : BaseFragment() {
             val myIntent = Intent(mContext, FriendListActivity::class.java)
             startActivity(myIntent)
         }
+
+//        준비 시간 설정
+        mBinding.readyTimeLayout.setOnClickListener {
+
+           val alert = AlertDialog.Builder(mContext)
+                .setView(R.layout.custom_alert_dialog)
+               .create()
+
+//            Dialog 내부 코드 작성
+
+//            positiveBtn ClickEvent > 준비 시간 조절 API
+
+//            실제 만들어놓은 다이얼로그 열기
+            alert.show()
+
+
+        }
     }
 
     override fun setValues() {

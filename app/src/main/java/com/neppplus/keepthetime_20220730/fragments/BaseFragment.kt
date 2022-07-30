@@ -20,7 +20,7 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mContext = requireContext()
-        retrofit = ServerApi.getRetrofit()
+        retrofit = ServerApi.getRetrofit(mContext)
         apiList = retrofit.create(APIList::class.java)
     }
 
