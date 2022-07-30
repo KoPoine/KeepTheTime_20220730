@@ -3,6 +3,7 @@ package com.neppplus.keepthetime_20220730
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.neppplus.keepthetime_20220730.adapters.MainViewPagerAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivityMainBinding
 
@@ -26,5 +27,25 @@ class MainActivity : BaseActivity() {
     override fun setValues() {
         mPagerAdapter = MainViewPagerAdapter(this)
         mBinding.mainViewPager.adapter = mPagerAdapter
+
+//        뷰페이저 연동 event
+        mBinding.mainViewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mBinding.bottomNav.menu.getItem(position).isChecked = true
+                }
+            }
+        )
+
+//        bottomNav 연동 event
+        mBinding.bottomNav.setOnItemSelectedListener {
+            when (it.itemId)  {
+                R.id.calendar -> mBinding.mainViewPager.currentItem = 0
+                R.id.invite -> mBinding.mainViewPager.currentItem = 1
+                R.id.setting -> mBinding.mainViewPager.currentItem = 2
+            }
+            return@setOnItemSelectedListener true
+        }
     }
 }
