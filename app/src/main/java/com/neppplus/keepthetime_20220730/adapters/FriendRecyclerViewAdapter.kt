@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.neppplus.keepthetime_20220730.R
+import com.neppplus.keepthetime_20220730.databinding.FriendListItemBinding
 import com.neppplus.keepthetime_20220730.datas.FriendData
 
 class FriendRecyclerViewAdapter (
@@ -16,19 +18,16 @@ class FriendRecyclerViewAdapter (
     val mList : ArrayList<FriendData>
         ): RecyclerView.Adapter<FriendRecyclerViewAdapter.MyViewHolder>(){
 
-    inner class MyViewHolder (view : View) : RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder (val binding : FriendListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind (item : FriendData) {
-            val profileImg = itemView.findViewById<ImageView>(R.id.profileImg)
-            val nickTxt = itemView.findViewById<TextView>(R.id.nickTxt)
 
-            nickTxt.text = item.nick_name
-            Glide.with(mContext).load(item.profile_img).into(profileImg)
+            binding.nickTxt.text = item.nick_name
+            Glide.with(mContext).load(item.profile_img).into(binding.profileImg)
+
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val row = LayoutInflater.from(mContext).inflate(R.layout.friend_list_item, parent, false)
-        return MyViewHolder(row)
+        return MyViewHolder(FriendListItemBinding.inflate(LayoutInflater.from(mContext), parent, false))
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
