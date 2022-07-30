@@ -1,5 +1,6 @@
 package com.neppplus.keepthetime_20220730
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -17,7 +18,10 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-
+        mBinding.signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
