@@ -38,4 +38,12 @@ interface APIList {
         @Header ("X-Http-Token") token : String
     ) : Call<BasicResponse>
 
+//    user/friend
+//    내친구 목록 불러오기
+
+    @GET("/user/friend")
+    fun getRequestFriendsList(
+        @Header ("X-Http-Token") token : String,
+        @Query ("type") type : String
+    ) : Call<BasicResponse>
 }
