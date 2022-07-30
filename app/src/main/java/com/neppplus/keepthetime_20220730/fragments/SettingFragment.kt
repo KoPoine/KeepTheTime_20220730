@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.neppplus.keepthetime_20220730.FriendListActivity
 import com.neppplus.keepthetime_20220730.LoginActivity
 import com.neppplus.keepthetime_20220730.MainActivity
 import com.neppplus.keepthetime_20220730.R
@@ -56,6 +57,12 @@ class SettingFragment : BaseFragment() {
                 .show()
 
 
+        }
+
+//        내 친구 목록 관리
+        mBinding.friendListLayout.setOnClickListener {
+            val myIntent = Intent(mContext, FriendListActivity::class.java)
+            startActivity(myIntent)
         }
     }
 
