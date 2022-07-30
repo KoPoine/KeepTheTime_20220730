@@ -31,4 +31,11 @@ interface APIList {
         @Field ("password") password: String
     ) : Call<BasicResponse>
 
+//    내정보 확인
+
+    @GET("/user")
+    fun getRequestMyInfo(
+        @Header ("X-Http-Token") token : String
+    ) : Call<BasicResponse>
+
 }
