@@ -8,7 +8,7 @@ class ServerApi {
     companion object {
 
 //        서버주소 멤버변수화
-        private val baseUrl = "http://54.180.52.26"
+        private val baseUrl = "https://keepthetime.xyz"
 
 //        retrofit 초기화 진행
         private var retrofit : Retrofit? = null
