@@ -1,5 +1,7 @@
 package com.neppplus.keepthetime_20220730.datas
 
+import java.io.Serializable
+
 data class PlaceData(
     val id : Int,
     val user_id : Int,
@@ -7,4 +9,4 @@ data class PlaceData(
     val latitude : Double,
     val longitude : Double,
     val is_primary : Boolean
-)
+) : Serializable
