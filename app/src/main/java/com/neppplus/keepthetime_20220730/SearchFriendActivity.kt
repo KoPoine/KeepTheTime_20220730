@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.neppplus.keepthetime_20220730.adapters.SearchFriendRecyclerViewAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivitySearchFriendBinding
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
+import com.neppplus.keepthetime_20220730.datas.UserData
 import com.neppplus.keepthetime_20220730.utils.AppUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,6 +18,9 @@ import retrofit2.Response
 class SearchFriendActivity : BaseActivity() {
 
     lateinit var mBinding : ActivitySearchFriendBinding
+
+    lateinit var mAdapter : SearchFriendRecyclerViewAdapter
+    val mList = ArrayList<UserData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,5 +62,9 @@ class SearchFriendActivity : BaseActivity() {
     override fun setValues() {
         titleTxt.text = "친구 목록 검색"
         backBtn.visibility = View.VISIBLE
+
+        mAdapter = SearchFriendRecyclerViewAdapter(mContext, mList)
+        mBinding.friendsRecyclerView.adapter = mAdapter
+        mBinding.friendsRecyclerView.layoutManager = LinearLayoutManager(mContext)
     }
 }
