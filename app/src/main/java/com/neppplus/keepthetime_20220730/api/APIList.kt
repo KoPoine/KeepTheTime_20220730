@@ -5,6 +5,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface APIList {
+//    Appointment
+    @GET("/appointment")
+    fun getRequestMyAppointment () : Call<BasicResponse>
 
 //    Search
 //    친구 닉네임으로 검색하기
