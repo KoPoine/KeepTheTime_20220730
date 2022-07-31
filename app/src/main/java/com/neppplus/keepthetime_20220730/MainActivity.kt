@@ -2,6 +2,7 @@ package com.neppplus.keepthetime_20220730
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.neppplus.keepthetime_20220730.adapters.MainViewPagerAdapter
@@ -25,6 +26,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+        backBtn.visibility = View.GONE
+
         mPagerAdapter = MainViewPagerAdapter(this)
         mBinding.mainViewPager.adapter = mPagerAdapter
 
