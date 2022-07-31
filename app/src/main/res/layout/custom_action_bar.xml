@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white">
+
+<!--    중간 부분 Title-->
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="타이틀"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+
+<!--    좌측 이미지-->
+
+
+<!--    우측 이미지-->
+
+</FrameLayout>
