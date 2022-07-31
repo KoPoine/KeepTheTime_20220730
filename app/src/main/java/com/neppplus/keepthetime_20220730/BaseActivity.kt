@@ -32,6 +32,8 @@ abstract class BaseActivity : AppCompatActivity(){
 
         supportActionBar?.let {
             setCustomActionBar()
+
+            backBtn.setOnClickListener { finish() }
         }
     }
 

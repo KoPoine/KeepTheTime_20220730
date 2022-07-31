@@ -1,5 +1,6 @@
 package com.neppplus.keepthetime_20220730
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,12 +22,10 @@ class FriendListActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        backBtn.setOnClickListener {
-            finish()
-        }
 
         addBtn.setOnClickListener {
-
+            val myIntent = Intent(mContext, SearchFriendActivity::class.java)
+            startActivity(myIntent)
         }
     }
 
