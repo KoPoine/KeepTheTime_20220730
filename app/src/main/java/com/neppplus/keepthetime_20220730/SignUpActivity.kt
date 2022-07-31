@@ -72,9 +72,7 @@ class SignUpActivity : BaseActivity() {
                         finish()
                     }
                     else {
-                        val message = AppUtil.getMessageFromErrorBody(response)
-
-                        Log.d("SignUpActivity", message)
+                        AppUtil.getMessageFromErrorBody(response, mContext)
                     }
                 }
 
@@ -144,9 +142,7 @@ class SignUpActivity : BaseActivity() {
                     }
 
                     else {
-                        val message = AppUtil.getMessageFromErrorBody(response)
-
-                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        AppUtil.getMessageFromErrorBody(response, mContext)
 
                         when (type) {
                             "EMAIL" -> emailOk = false

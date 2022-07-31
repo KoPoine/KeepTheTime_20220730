@@ -49,8 +49,7 @@ class SearchFriendRecyclerViewAdapter(
                             Toast.makeText(mContext, "${item.nick_name}님께 친구 요청을 보냈습니다.", Toast.LENGTH_SHORT).show()
                         }
                         else {
-                            val message = AppUtil.getMessageFromErrorBody(response)
-                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                            AppUtil.getMessageFromErrorBody(response, mContext)
                         }
                     }
 

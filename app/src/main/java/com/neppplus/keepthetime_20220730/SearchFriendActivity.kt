@@ -53,8 +53,7 @@ class SearchFriendActivity : BaseActivity() {
 //                        [도전과제2] 검색 버튼을 눌렀을때, 가상 키보드 사라지게(구글링해서 작성)
                     }
                     else {
-                        val message = AppUtil.getMessageFromErrorBody(response)
-                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        AppUtil.getMessageFromErrorBody(response, mContext)
                     }
                 }
 

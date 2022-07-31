@@ -61,8 +61,7 @@ class LoginActivity : BaseActivity() {
                         finish()
                     }
                     else {
-                        val message = AppUtil.getMessageFromErrorBody(response)
-                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        AppUtil.getMessageFromErrorBody(response, mContext)
                     }
                 }
 
