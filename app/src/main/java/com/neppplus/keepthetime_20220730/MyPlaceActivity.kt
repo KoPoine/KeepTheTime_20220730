@@ -1,7 +1,9 @@
 package com.neppplus.keepthetime_20220730
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neppplus.keepthetime_20220730.adapters.MyPlaceRecyclerViewAdapter
@@ -27,10 +29,17 @@ class MyPlaceActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-
+        addBtn.setOnClickListener {
+            val myIntent = Intent(mContext, EditMyPlaceActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
+        titleTxt.text = "내 출발 장소 관리"
+        addBtn.visibility = View.VISIBLE
+        backBtn.visibility = View.VISIBLE
+
         mPlaceAdapter = MyPlaceRecyclerViewAdapter(mContext, mList)
         mBinding.myPlaceRecyclerview.adapter = mPlaceAdapter
         mBinding.myPlaceRecyclerview.layoutManager = LinearLayoutManager(mContext)

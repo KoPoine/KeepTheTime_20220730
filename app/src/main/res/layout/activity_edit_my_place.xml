@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".EditMyPlaceActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장소명"/>
+
+        <EditText
+            android:id="@+id/placeNameEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="저장해줄 장소 이름 입력"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:maxLines="1"/>
+
+        <CheckBox
+            android:id="@+id/primaryPlaceCb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기본 출발지로 지정"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위치 선택"/>
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:name="com.naver.maps.map.MapFragment"/>
+
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내 장소로 저장"/>
+
+    </LinearLayout>
+</layout>
