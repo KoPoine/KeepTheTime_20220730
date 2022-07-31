@@ -2,6 +2,7 @@ package com.neppplus.keepthetime_20220730
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.neppplus.keepthetime_20220730.adapters.FriendViewPagerAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivityFriendListBinding
@@ -20,7 +21,13 @@ class FriendListActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        backBtn.setOnClickListener {
+            finish()
+        }
 
+        addBtn.setOnClickListener {
+
+        }
     }
 
     override fun setValues() {
@@ -30,5 +37,7 @@ class FriendListActivity : BaseActivity() {
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
 
         titleTxt.text = "친구 목록 관리"
+        addBtn.visibility = View.VISIBLE
+        backBtn.visibility = View.VISIBLE
     }
 }
