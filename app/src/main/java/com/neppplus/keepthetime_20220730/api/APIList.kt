@@ -46,6 +46,14 @@ interface APIList {
         @Field ("value") value : String
     ) : Call<BasicResponse>
 
+//    비밀 번호 변경
+    @FormUrlEncoded
+    @PATCH("/user/password")
+    fun getRequestChangePw (
+        @Field ("current_password") currentPw : String,
+        @Field ("new_password") newPw : String
+    ) : Call<BasicResponse>
+
 //    user/friend
 //    내친구 목록 불러오기
 

@@ -132,6 +132,63 @@ class SettingFragment : BaseFragment() {
 
 
         }
+
+//        비밀번호 변경 Event
+        mBinding.editPwLayout.setOnClickListener {
+            val customView = LayoutInflater.from(mContext).inflate(R.layout.custom_alert_dialog, null)
+
+            val alert = AlertDialog.Builder(mContext)
+                .setView(customView)
+                .create()
+
+            val titleTxt = customView.findViewById<TextView>(R.id.titleTxt)
+            val bodyTxt = customView.findViewById<TextView>(R.id.bodyTxt)
+            val inputEdt = customView.findViewById<EditText>(R.id.inputEdt)
+            val inputEdt2 = customView.findViewById<EditText>(R.id.inputEdt2)
+            val positiveBtn = customView.findViewById<Button>(R.id.positiveBtn)
+            val negativeBtn = customView.findViewById<Button>(R.id.negativeBtn)
+
+            bodyTxt.visibility = View.GONE
+            inputEdt2.visibility = View.VISIBLE
+
+            titleTxt.text = "비밀 번호 변경"
+            inputEdt.hint = "이전 비밀번호 입력"
+            inputEdt2.hint = "새 비밀번호 입력"
+
+//            도전과제 : EditText의 InputType 변경, imeOption 변경
+//            hint : Kotlin EditText change InputType programmatically > 동적으로 ~~을 변경하는 방법
+
+            positiveBtn.setOnClickListener {
+                apiList.getRequestChangePw(
+                    inputEdt.text.toString(), inputEdt2.text.toString()
+                ).enqueue(object : Callback<BasicResponse>{
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val br = response.body()!!
+
+                            Toast.makeText(mContext, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+
+                            ContextUtil.setLoginToken(mContext, br.data.token)
+
+                            alert.dismiss()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+                })
+            }
+
+            negativeBtn.setOnClickListener {
+                alert.dismiss()
+            }
+
+            alert.show()
+        }
     }
 
     override fun setValues() {
