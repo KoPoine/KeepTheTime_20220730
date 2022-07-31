@@ -39,11 +39,12 @@ class SearchFriendActivity : BaseActivity() {
                     response: Response<BasicResponse>
                 ) {
                     if (response.isSuccessful) {
+                        val br = response.body()!!
 //                        2. 친구 목록을 정리(우리의 리스트에 반영)
-
+                        mList.addAll(br.data.users)
 
 //                        3. 어댑터에 연결(notifyDataSetChanged)
-
+                        mAdapter.notifyDataSetChanged()
                     }
                     else {
                         val message = AppUtil.getMessageFromErrorBody(response)
