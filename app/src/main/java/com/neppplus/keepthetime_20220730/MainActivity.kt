@@ -27,6 +27,8 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
 
+        titleTxt.text = "약속 지킴 앱"
+
         backBtn.visibility = View.GONE
 
         mPagerAdapter = MainViewPagerAdapter(this)
