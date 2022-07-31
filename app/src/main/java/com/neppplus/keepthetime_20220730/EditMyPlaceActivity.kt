@@ -2,6 +2,7 @@ package com.neppplus.keepthetime_20220730
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -29,6 +30,7 @@ class EditMyPlaceActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_edit_my_place)
         setupEvents()
         setValues()
+        Log.d("EditMyPlaceActivity", "onCreate")
     }
 
     override fun setupEvents() {

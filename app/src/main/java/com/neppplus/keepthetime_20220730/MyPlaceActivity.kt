@@ -3,6 +3,7 @@ package com.neppplus.keepthetime_20220730
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,17 @@ class MyPlaceActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_place)
         setupEvents()
         setValues()
+        Log.d("MyPlaceActivity", "onCreate")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("MyPlaceActivity", "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getMyPlaceFromServer()
     }
 
     override fun setupEvents() {
@@ -43,18 +55,16 @@ class MyPlaceActivity : BaseActivity() {
         mPlaceAdapter = MyPlaceRecyclerViewAdapter(mContext, mList)
         mBinding.myPlaceRecyclerview.adapter = mPlaceAdapter
         mBinding.myPlaceRecyclerview.layoutManager = LinearLayoutManager(mContext)
-
-        getMyPlaceFromServer()
     }
 
     fun getMyPlaceFromServer () {
-
-        mList.clear()
-
         apiList.getRequestMyPlace().enqueue(object : Callback<BasicResponse>{
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
                 if (response.isSuccessful) {
                     val br = response.body()!!
+
+
+                    mList.clear()
                     mList.addAll(br.data.places)
 
                     mPlaceAdapter.notifyDataSetChanged()
