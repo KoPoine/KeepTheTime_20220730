@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,6 +101,10 @@ class FriendRecyclerViewAdapter (
 //                                            // Fragment의 경우 f + 몇 번째 프래그먼트인지를 통해서 tag가 자동 생성
 //                                        .findFragmentByTag("f1") as InviteFriendsFragment)
 //                                        .getFriendListFromServer()
+
+                                    ((mContext as FriendListActivity)
+                                        .mPagerAdapter.getItem(1) as InviteFriendsFragment)
+                                        .getFriendListFromServer()
                                 }
                             }
 

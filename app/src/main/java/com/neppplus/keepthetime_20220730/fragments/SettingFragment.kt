@@ -14,10 +14,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.neppplus.keepthetime_20220730.FriendListActivity
-import com.neppplus.keepthetime_20220730.LoginActivity
-import com.neppplus.keepthetime_20220730.MainActivity
-import com.neppplus.keepthetime_20220730.R
+import com.neppplus.keepthetime_20220730.*
 import com.neppplus.keepthetime_20220730.databinding.FragmentSettingBinding
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.utils.ContextUtil
@@ -188,6 +185,12 @@ class SettingFragment : BaseFragment() {
             }
 
             alert.show()
+        }
+
+//        내 출발 장소 관리
+        mBinding.myPlaceLayout.setOnClickListener {
+            val myIntent = Intent(mContext, MyPlaceActivity::class.java)
+            startActivity(myIntent)
         }
     }
 

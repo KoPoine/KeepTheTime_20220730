@@ -65,7 +65,6 @@ interface APIList {
 //    내친구 목록 불러오기
     @GET("/user/friend")
     fun getRequestFriendsList(
-        @Header ("X-Http-Token") token : String,
         @Query ("type") type : String
     ) : Call<BasicResponse>
 
@@ -83,4 +82,11 @@ interface APIList {
         @Field ("user_id") userId : Int,
         @Field ("type") type : String
     ) : Call<BasicResponse>
+
+
+
+//    user/place
+//    내 장소 목록 불러오기
+    @GET("/user/place")
+    fun getRequestMyPlace() : Call<BasicResponse>
 }

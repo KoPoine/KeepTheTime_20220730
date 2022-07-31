@@ -6,6 +6,7 @@
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_friend_list.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_my_place.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_search_friend.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_sign_up.xml" value="0.3151041666666667" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/activity_splash.xml" value="0.3333333333333333" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/fragment_my_friends.xml" value="0.33229166666666665" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/fragment_setting.xml" value="0.33" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/friend_list_item.xml" value="0.33229166666666665" />
+        <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/place_list_item.xml" value="0.33" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/layout/search_friend_list_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/NePPPlus_Teacher_02/AndroidStudioProjects/KeepTheTime_20220730/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3333333333333333" />
       </map>

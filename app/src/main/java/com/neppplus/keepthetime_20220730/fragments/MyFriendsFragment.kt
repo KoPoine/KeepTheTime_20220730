@@ -52,7 +52,7 @@ class MyFriendsFragment : BaseFragment() {
 
     fun getFriendListFromServer() {
         val token = ContextUtil.getLoginToken(mContext)
-        apiList.getRequestFriendsList(token, "my").enqueue(object : Callback<BasicResponse>{
+        apiList.getRequestFriendsList("my").enqueue(object : Callback<BasicResponse>{
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
                 if (response.isSuccessful) {
                     val br = response.body()!!
