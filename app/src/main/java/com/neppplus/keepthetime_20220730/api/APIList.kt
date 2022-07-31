@@ -38,6 +38,14 @@ interface APIList {
         @Header ("X-Http-Token") token : String
     ) : Call<BasicResponse>
 
+//    회원 정보 수정
+    @FormUrlEncoded
+    @PATCH("/user")
+    fun getRequestEditUser(
+        @Field ("field") type: String,
+        @Field ("value") value : String
+    ) : Call<BasicResponse>
+
 //    user/friend
 //    내친구 목록 불러오기
 

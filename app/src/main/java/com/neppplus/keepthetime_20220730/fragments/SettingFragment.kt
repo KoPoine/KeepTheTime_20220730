@@ -7,6 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -15,8 +19,12 @@ import com.neppplus.keepthetime_20220730.LoginActivity
 import com.neppplus.keepthetime_20220730.MainActivity
 import com.neppplus.keepthetime_20220730.R
 import com.neppplus.keepthetime_20220730.databinding.FragmentSettingBinding
+import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.utils.ContextUtil
 import com.neppplus.keepthetime_20220730.utils.GlobalData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingFragment : BaseFragment() {
 
@@ -68,13 +76,56 @@ class SettingFragment : BaseFragment() {
 //        준비 시간 설정
         mBinding.readyTimeLayout.setOnClickListener {
 
-           val alert = AlertDialog.Builder(mContext)
-                .setView(R.layout.custom_alert_dialog)
-               .create()
+            val customView = LayoutInflater.from(mContext).inflate(R.layout.custom_alert_dialog, null)
+
+            val alert = AlertDialog.Builder(mContext)
+                .setView(customView)
+                .create()
 
 //            Dialog 내부 코드 작성
+            val titleTxt = customView.findViewById<TextView>(R.id.titleTxt)
+            val bodyTxt = customView.findViewById<TextView>(R.id.bodyTxt)
+            val inputEdt = customView.findViewById<EditText>(R.id.inputEdt)
+            val positiveBtn = customView.findViewById<Button>(R.id.positiveBtn)
+            val negativeBtn = customView.findViewById<Button>(R.id.negativeBtn)
 
+            titleTxt.text = "준비 시간 설정"
+            bodyTxt.text = "준비하는데 걸리는 시간을\n'분' 단위로 입력해주세요."
+            inputEdt.hint = "'분' 단위로 입력"
+
+            positiveBtn.setOnClickListener {
 //            positiveBtn ClickEvent > 준비 시간 조절 API
+                apiList.getRequestEditUser(
+                    "ready_minute", inputEdt.text.toString()
+                ).enqueue(object : Callback<BasicResponse>{
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val br = response.body()!!
+
+                            GlobalData.loginUser = br.data.user
+
+                            Toast.makeText(mContext, "준비 시작이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+
+                            mBinding.myReadyTimeTxt.text = "${br.data.user.ready_minute}분"
+
+                            alert.dismiss()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+                })
+            }
+
+            negativeBtn.setOnClickListener {
+                alert.dismiss()
+            }
+
+
 
 //            실제 만들어놓은 다이얼로그 열기
             alert.show()
