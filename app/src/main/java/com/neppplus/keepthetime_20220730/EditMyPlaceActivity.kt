@@ -3,12 +3,18 @@ package com.neppplus.keepthetime_20220730
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.overlay.Marker
 import com.neppplus.keepthetime_20220730.databinding.ActivityEditMyPlaceBinding
+import com.neppplus.keepthetime_20220730.datas.BasicResponse
+import com.neppplus.keepthetime_20220730.utils.AppUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EditMyPlaceActivity : BaseActivity() {
 
@@ -29,9 +35,36 @@ class EditMyPlaceActivity : BaseActivity() {
         mBinding.saveBtn.setOnClickListener {
 //            API 통신 > 저장 (latitude / longitude)
 //            1. 장소이름 넣었나요?
+            val inputName = mBinding.placeNameEdt.text.toString()
+            if (inputName.isBlank()) {
+                Toast.makeText(mContext, "장소명은 공백 / 빈칸 일 수 없습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
 //            2. 기본장소인가요?
+            val isPrimary = mBinding.primaryPlaceCb.isChecked
 
+//            3. 실제 API 연결
+            apiList.getRequestAddMyPlace(
+                inputName, mSelectedLatitude, mSelectedLongitude, isPrimary
+            ).enqueue(object : Callback<BasicResponse>{
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(mContext, "장소가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    else {
+                        AppUtil.getMessageFromErrorBody(response, mContext)
+                    }
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+            })
         }
     }
 

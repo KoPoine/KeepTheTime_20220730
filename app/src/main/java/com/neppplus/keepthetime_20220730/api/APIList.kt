@@ -89,4 +89,14 @@ interface APIList {
 //    내 장소 목록 불러오기
     @GET("/user/place")
     fun getRequestMyPlace() : Call<BasicResponse>
+
+//    내 장소 추가하기
+    @FormUrlEncoded
+    @POST("/user/place")
+    fun getRequestAddMyPlace(
+        @Field ("name") name : String,
+        @Field ("latitude") latitude : Double,
+        @Field ("longitude") longitude : Double,
+        @Field ("is_primary") isPrimary : Boolean
+    ) : Call<BasicResponse>
 }
