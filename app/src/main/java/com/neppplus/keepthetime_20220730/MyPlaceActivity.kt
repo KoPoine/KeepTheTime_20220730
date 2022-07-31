@@ -63,7 +63,6 @@ class MyPlaceActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     val br = response.body()!!
 
-
                     mList.clear()
                     mList.addAll(br.data.places)
 

@@ -99,4 +99,10 @@ interface APIList {
         @Field ("longitude") longitude : Double,
         @Field ("is_primary") isPrimary : Boolean
     ) : Call<BasicResponse>
+
+//    장소 삭제하기
+    @DELETE("/user/place")
+    fun getRequestDeleteMyPlace (
+        @Query ("place_id") placeId : Int
+    ) : Call<BasicResponse>
 }
