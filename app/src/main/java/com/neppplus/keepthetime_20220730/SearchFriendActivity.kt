@@ -48,6 +48,9 @@ class SearchFriendActivity : BaseActivity() {
 
 //                        3. 어댑터에 연결(notifyDataSetChanged)
                         mAdapter.notifyDataSetChanged()
+
+//                        [도전과제] 검색이 없을때 아래쪽에 "검색된 결과가 없습니다." 텍스트 출력
+//                        [도전과제2] 검색 버튼을 눌렀을때, 가상 키보드 사라지게(구글링해서 작성)
                     }
                     else {
                         val message = AppUtil.getMessageFromErrorBody(response)
