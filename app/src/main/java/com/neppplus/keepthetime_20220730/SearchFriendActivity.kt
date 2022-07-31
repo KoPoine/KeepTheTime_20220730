@@ -31,6 +31,9 @@ class SearchFriendActivity : BaseActivity() {
 
     override fun setupEvents() {
         mBinding.searchBtn.setOnClickListener {
+//            0. 기존의 친구 검색 목록을 제거
+            mList.clear()
+
 //            1. 서버에서 친구 목록을 검색해서 받아오기
             val inputNick = mBinding.inputEdt.text.toString()
             apiList.getRequestSearchUser(inputNick).enqueue(object : Callback<BasicResponse>{
