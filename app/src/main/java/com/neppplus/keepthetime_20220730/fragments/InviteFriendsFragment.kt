@@ -45,7 +45,7 @@ class InviteFriendsFragment : BaseFragment() {
     override fun setValues() {
         getFriendListFromServer()
 
-        mFriendAdapter = FriendRecyclerViewAdapter(mContext, mFriendList)
+        mFriendAdapter = FriendRecyclerViewAdapter(mContext, mFriendList, "requested")
         mBinding.invitedRecyclerView.adapter = mFriendAdapter
         mBinding.invitedRecyclerView.layoutManager = LinearLayoutManager(mContext)
     }

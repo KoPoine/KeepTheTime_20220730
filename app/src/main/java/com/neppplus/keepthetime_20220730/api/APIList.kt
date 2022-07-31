@@ -75,4 +75,12 @@ interface APIList {
     fun getRequestAddFriend (
         @Field ("user_id") userId : Int
     ) : Call<BasicResponse>
+
+//    친구 추가 수락 / 거절
+    @FormUrlEncoded
+    @PUT ("/user/friend")
+    fun getRequestBooleanRequested (
+        @Field ("user_id") userId : Int,
+        @Field ("type") type : String
+    ) : Call<BasicResponse>
 }

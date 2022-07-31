@@ -45,7 +45,7 @@ class MyFriendsFragment : BaseFragment() {
     override fun setValues() {
         getFriendListFromServer()
 
-        mFriendAdapter = FriendRecyclerViewAdapter(mContext, mFriendList)
+        mFriendAdapter = FriendRecyclerViewAdapter(mContext, mFriendList, "my")
         mBinding.myFriendRecyclerView.adapter = mFriendAdapter
         mBinding.myFriendRecyclerView.layoutManager = LinearLayoutManager(mContext)
     }
