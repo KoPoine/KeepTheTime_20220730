@@ -28,5 +28,7 @@ class FriendListActivity : BaseActivity() {
         mBinding.viewPager.adapter = mPagerAdapter
 
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
+
+        titleTxt.text = "친구 목록 관리"
     }
 }

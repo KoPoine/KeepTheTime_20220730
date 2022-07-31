@@ -2,6 +2,7 @@ package com.neppplus.keepthetime_20220730
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ abstract class BaseActivity : AppCompatActivity(){
     lateinit var apiList : APIList
 
     lateinit var titleTxt : TextView
+    lateinit var backBtn : ImageView
+    lateinit var addBtn : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,8 @@ abstract class BaseActivity : AppCompatActivity(){
         toolbar.setContentInsetsAbsolute(0,0)
 
         titleTxt = defActionBar.customView.findViewById(R.id.titleTxt)
+        backBtn = defActionBar.customView.findViewById(R.id.backBtn)
+        addBtn = defActionBar.customView.findViewById(R.id.addBtn)
     }
 
 }
