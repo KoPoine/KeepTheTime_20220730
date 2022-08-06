@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neppplus.keepthetime_20220730.EditAppointmentActivity
 import com.neppplus.keepthetime_20220730.R
 import com.neppplus.keepthetime_20220730.adapters.AppointmentRecyclerViewAdapter
 import com.neppplus.keepthetime_20220730.databinding.FragmentAppointmentsBinding
@@ -43,8 +44,8 @@ class AppointmentsFragment : BaseFragment() {
 
     override fun setupEvents() {
         mBinding.addAppointmentBtn.setOnClickListener {
-//            val myIntent = Intent(mContext, )
-//            startActivity(myIntent)
+            val myIntent = Intent(mContext, EditAppointmentActivity::class.java)
+            startActivity(myIntent)
         }
     }
 
