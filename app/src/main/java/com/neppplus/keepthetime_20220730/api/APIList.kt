@@ -64,6 +64,15 @@ interface APIList {
         @Field ("new_password") newPw : String
     ) : Call<BasicResponse>
 
+//    소셜로그인
+    @FormUrlEncoded
+    @POST("/user/social")
+    fun getRequestLoginWithSocial(
+        @Field ("provider") provider : String,
+        @Field ("uid") uid : String,
+        @Field ("nick_name") nick : String
+    ) : Call<BasicResponse>
+
 //    user/friend
 //    내친구 목록 불러오기
     @GET("/user/friend")

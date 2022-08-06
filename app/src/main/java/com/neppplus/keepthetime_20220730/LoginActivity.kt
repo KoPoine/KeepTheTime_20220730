@@ -15,6 +15,7 @@ import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.utils.AppUtil
 import com.neppplus.keepthetime_20220730.utils.ContextUtil
 import com.neppplus.keepthetime_20220730.utils.GlobalData
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -133,9 +134,58 @@ class LoginActivity : BaseActivity() {
                 Log.i(TAG, "사용자 정보 요청 성공" +
                         "\n회원번호: ${user.id}" +
                         "\n닉네임: ${user.kakaoAccount?.profile?.nickname}")
+
+                socialLogin("kakao", "${user.id}", "${user.kakaoAccount?.profile?.nickname}")
             }
         }
     }
 
+    fun socialLogin(provider : String, uid : String, nick : String) {
+        apiList.getRequestLoginWithSocial(provider, uid, nick).enqueue(object : Callback<BasicResponse>{
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+                if (response.isSuccessful) {
+                    val br = response.body()!!
+
+//                    1. 로그인 토큰 기록
+                    ContextUtil.setLoginToken(mContext, br.data.token)
+
+//                    2. 자동 로그인 여부 기록
+                    ContextUtil.setAutoLogin(mContext, mBinding.autoLoginCb.isChecked)
+
+//                    3. GlobalData에 로그인한 유저 정보 기록
+                    GlobalData.loginUser = br.data.user
+
+                    Toast.makeText(
+                        mContext,
+                        "${br.data.user.nick_name}님 환영합니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    val myIntent = Intent(mContext, MainActivity::class.java)
+                    startActivity(myIntent)
+                    finish()
+                }
+                else {
+                    val errorBodyStr = response.errorBody()!!.string()
+                    val jsonObj = JSONObject(errorBodyStr)
+                    val code = jsonObj.getInt("code")
+                    val message = jsonObj.getString("message")
+
+                    if (code == 400) {
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(mContext, "에러가 발생했습니다.\n재로그인을 해주세요.", Toast.LENGTH_SHORT).show()
+                        Log.e(TAG, "code : $code, message : $message")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+
+        })
+    }
 
 }
