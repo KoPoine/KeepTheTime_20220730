@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,9 +22,15 @@ import com.neppplus.keepthetime_20220730.databinding.FragmentSettingBinding
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.utils.ContextUtil
 import com.neppplus.keepthetime_20220730.utils.GlobalData
+import com.neppplus.keepthetime_20220730.utils.URIPathHelper
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.util.*
 
 class SettingFragment : BaseFragment() {
 
@@ -252,6 +259,59 @@ class SettingFragment : BaseFragment() {
         Glide.with(mContext).load(loginUser.profile_img).into(mBinding.profileImg)
         mBinding.nickTxt.text = loginUser.nick_name
         mBinding.myReadyTimeTxt.text = "${loginUser.ready_minute}분"
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQ_FOR_GALLERY) {
+//                어떤 파일을 골랐는지? 확인
+//                임시 : 고른 사진을 profileImg에 바로 적용(with Glide)
+
+//                data? > 이전 화면(갤러리)이 넘겨준 resultIntent
+//                data?.data => 선택한 사진이 들어있는 경로(Path) 정보 (Uri)
+
+                val imgUri = data?.data  // imgUri의 자료형 > Uri?
+
+//                Uri => 이미지뷰에 사진을 적용(Glide)
+//                Glide.with(mContext).load(imgUri).into(mBinding.profileImg)
+
+//                API 서버에 사진을 전송 => PUT 메쏘드 + ("/user/image") 기능주소
+//                파일(자료형 : File)을 같이 첨부해야함 => Multipart 형식의 데이터를 첨부 활용(기존의 FormData와 다르다)
+
+//                1. Uri -> file 형태로 변환 => 그 파일의 실제 경로를 얻어낼 필요가 있다. (getRealPathFromUri)
+                val imgFile = File(URIPathHelper().getPath(mContext, imgUri!!))
+
+//                2. file을 retrofit에 첨부할 수 있는 RequestBody
+                val fileReqBody = RequestBody.create(MediaType.get("image/*"), imgFile)
+
+//                3. 만들어 놓은 RequestBody => MultipartBody 형태로 변환
+                val body = MultipartBody.Part.createFormData("profile_image", "myFile.jpg", fileReqBody)
+
+                apiList.getRequestEditUserProfile(body).enqueue(object : Callback<BasicResponse>{
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val br = response.body()!!
+//                            1. 바뀐 userData Update
+                            GlobalData.loginUser = br.data.user
+
+//                            2. 선택한 이미지로 UI 프사 변경
+                            Glide.with(mContext).load(br.data.user.profile_img).into(mBinding.profileImg)
+
+//                            3. 토스트로 성공 메시지 송출
+                            Toast.makeText(mContext, "프로필 사진이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+                })
+            }
+        }
     }
 
 }
