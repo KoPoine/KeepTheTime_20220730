@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import com.kakao.sdk.common.util.Utility
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.utils.ContextUtil
 import com.neppplus.keepthetime_20220730.utils.GlobalData
@@ -21,6 +23,7 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        getKeyHash()
         setupEvents()
         setValues()
     }
@@ -72,5 +75,11 @@ class SplashActivity : BaseActivity() {
             }, 1500
         )
 
+    }
+
+    fun getKeyHash() {
+        val keyHash = Utility.getKeyHash(mContext)
+
+        Log.d("kakao_keyHash", keyHash)
     }
 }
