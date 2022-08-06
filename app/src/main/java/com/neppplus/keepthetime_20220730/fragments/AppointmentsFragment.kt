@@ -1,5 +1,6 @@
 package com.neppplus.keepthetime_20220730.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -41,7 +42,10 @@ class AppointmentsFragment : BaseFragment() {
     }
 
     override fun setupEvents() {
-
+        mBinding.addAppointmentBtn.setOnClickListener {
+//            val myIntent = Intent(mContext, )
+//            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
