@@ -7,9 +7,17 @@ import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.databinding.DataBindingUtil
+import com.neppplus.keepthetime_20220730.adapters.StartPlaceSpinnerAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivityEditAppointmentAcitivtyBinding
+import com.neppplus.keepthetime_20220730.datas.BasicResponse
+import com.neppplus.keepthetime_20220730.datas.PlaceData
+import com.neppplus.keepthetime_20220730.datas.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class EditAppointmentActivity : BaseActivity() {
 
@@ -17,6 +25,12 @@ class EditAppointmentActivity : BaseActivity() {
 
 //    선택한 약속 일시를 저장할 멤버변수
     var mSelectedDateTime = Calendar.getInstance()  // 기본값 : 현재시간
+
+//    스피너에 활용될 멤버변수
+    val mPlaceList = ArrayList<PlaceData>()
+    val mFriendList = ArrayList<UserData>()
+
+    lateinit var mPlaceAdapter : StartPlaceSpinnerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +90,27 @@ class EditAppointmentActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        mPlaceAdapter = StartPlaceSpinnerAdapter(mContext, R.layout.place_list_item, mPlaceList)
+        mBinding.startPlaceSpinner.adapter = mPlaceAdapter
 
+        getMyPlaceListFromServer()
+    }
+
+    fun getMyPlaceListFromServer() {
+        apiList.getRequestMyPlace().enqueue(object : Callback<BasicResponse>{
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+                if (response.isSuccessful) {
+
+                    mPlaceList.clear()
+                    mPlaceList.addAll(response.body()!!.data.places)
+                    mPlaceAdapter.notifyDataSetChanged()
+
+                }
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+        })
     }
 }
