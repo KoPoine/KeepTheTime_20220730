@@ -27,7 +27,14 @@ class AppointmentRecyclerViewAdapter (
 
             titleTxt.text = item.title
 //            dateTimeTxt.text = "약속 시간 : ${item.datetime}"  // yyyy-MM-dd HH:mm:ss 형태로 내려받은 String을 변환
-            val datetime = item.datetime
+
+//            우리 서버가 내려주는 String 양식을 simpleDateFormat 저장
+            val stringToDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+//            String을 Date양식으로 변환(Parse)
+            val datetime = stringToDate.parse(item.datetime)
+
+//            우리가 표출을 원하는 양식을 작성 (월/일 오전 시:분)
             val sdf = SimpleDateFormat("M/d a h:mm")
 
             dateTimeTxt.text = "약속 시간 : ${sdf.format(datetime)}"
