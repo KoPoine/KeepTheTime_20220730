@@ -197,6 +197,25 @@ class SettingFragment : BaseFragment() {
     override fun setValues() {
         val loginUser = GlobalData.loginUser!!
 
+//        소셜 로그인 아이콘 설정
+        if (loginUser.provider != "default") {
+            mBinding.socialIconImg.visibility = View.VISIBLE
+            when (loginUser.provider) {
+                "kakao" -> {
+                    mBinding.socialIconImg.setImageResource(R.drawable.kakao_login_icon)
+                }
+                "facebook" -> {
+
+                }
+                "naver" -> {
+
+                }
+//                else -> {
+//                    mBinding.socialIconImg.visibility = View.GONE
+//                }
+            }
+        }
+
         Glide.with(mContext).load(loginUser.profile_img).into(mBinding.profileImg)
         mBinding.nickTxt.text = loginUser.nick_name
         mBinding.myReadyTimeTxt.text = "${loginUser.ready_minute}분"
