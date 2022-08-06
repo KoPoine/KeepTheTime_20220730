@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.databinding.DataBindingUtil
@@ -29,6 +31,9 @@ class EditAppointmentActivity : BaseActivity() {
 //    스피너에 활용될 멤버변수
     val mPlaceList = ArrayList<PlaceData>()
     val mFriendList = ArrayList<UserData>()
+
+//    출발지 장소 저장
+    lateinit var mSelectedStartPlace : PlaceData
 
     lateinit var mPlaceAdapter : StartPlaceSpinnerAdapter
 
@@ -86,6 +91,18 @@ class EditAppointmentActivity : BaseActivity() {
                 mSelectedDateTime.get(Calendar.MINUTE),
                 false
             ).show()
+        }
+
+//        출발장소 스피너 선택 이벤트
+        mBinding.startPlaceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+
+                mSelectedStartPlace = mPlaceList[position]
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
         }
     }
 
