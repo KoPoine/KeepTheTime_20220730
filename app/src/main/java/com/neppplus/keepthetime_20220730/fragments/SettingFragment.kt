@@ -1,5 +1,6 @@
 package com.neppplus.keepthetime_20220730.fragments
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -12,8 +13,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.neppplus.keepthetime_20220730.*
 import com.neppplus.keepthetime_20220730.databinding.FragmentSettingBinding
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
@@ -26,6 +28,8 @@ import retrofit2.Response
 class SettingFragment : BaseFragment() {
 
     lateinit var mBinding : FragmentSettingBinding
+
+    val REQ_FOR_GALLERY = 1004
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -192,6 +196,35 @@ class SettingFragment : BaseFragment() {
             val myIntent = Intent(mContext, MyPlaceActivity::class.java)
             startActivity(myIntent)
         }
+
+//        내 프로필 이미지 변경
+        mBinding.profileImg.setOnClickListener {
+//            갤러리를 개발자가 이용 : 사용자의 내부 저장소에 접근 => 권한 획득이 필요
+//            권한 설정 => Tedpermission 라이브러리 활용
+
+//            PermissionListener 설정
+            val pl = object : PermissionListener{
+                override fun onPermissionGranted() {
+//                    권한 OK => 갤러리로 이동 > Intent(4) 활용
+                    val myIntent = Intent()
+                    myIntent.action = Intent.ACTION_PICK
+                    myIntent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                    startActivityForResult(myIntent, REQ_FOR_GALLERY)
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+//                    권한 거절
+                    Toast.makeText(mContext, "권한이 거부되어 프로필이미지를 변경할 수 없습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            TedPermission.create()
+                .setPermissionListener(pl)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check()
+        }
+
     }
 
     override fun setValues() {

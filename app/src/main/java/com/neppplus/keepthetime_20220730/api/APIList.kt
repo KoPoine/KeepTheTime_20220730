@@ -3,6 +3,7 @@ package com.neppplus.keepthetime_20220730.api
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import retrofit2.Call
 import retrofit2.http.*
+import java.io.File
 
 interface APIList {
 //    Appointment
@@ -71,6 +72,12 @@ interface APIList {
         @Field ("provider") provider : String,
         @Field ("uid") uid : String,
         @Field ("nick_name") nick : String
+    ) : Call<BasicResponse>
+
+    @FormUrlEncoded
+    @PUT("/user/image")
+    fun getRequestEditUserProfile(
+        @Field ("profile_image") profileImg : File
     ) : Call<BasicResponse>
 
 //    user/friend
