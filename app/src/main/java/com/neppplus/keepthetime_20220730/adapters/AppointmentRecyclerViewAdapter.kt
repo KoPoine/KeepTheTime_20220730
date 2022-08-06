@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.neppplus.keepthetime_20220730.R
 import com.neppplus.keepthetime_20220730.datas.AppointmentData
+import java.text.SimpleDateFormat
 
 class AppointmentRecyclerViewAdapter (
     val mContext : Context,
@@ -21,7 +23,15 @@ class AppointmentRecyclerViewAdapter (
             val placeTxt = itemView.findViewById<TextView>(R.id.placeTxt)
             val memberTxt = itemView.findViewById<TextView>(R.id.memberTxt)
 
+            Log.d("약속", item.toString())
+
             titleTxt.text = item.title
+//            dateTimeTxt.text = "약속 시간 : ${item.datetime}"  // yyyy-MM-dd HH:mm:ss 형태로 내려받은 String을 변환
+            val datetime = item.datetime
+            val sdf = SimpleDateFormat("M/d a h:mm")
+
+            dateTimeTxt.text = "약속 시간 : ${sdf.format(datetime)}"
+
             placeTxt.text = "약속 장소 : ${item.place}"
             memberTxt.text = "참여 인원 : ${item.invited_friends.size}명"
         }

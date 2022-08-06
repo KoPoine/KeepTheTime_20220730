@@ -1,6 +1,8 @@
 package com.neppplus.keepthetime_20220730.datas
 
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class AppointmentData(
     val id : Int,
@@ -9,5 +11,5 @@ data class AppointmentData(
     val latitude : Double,
     val longitude : Double,
     val invited_friends : ArrayList<UserData>,
-    val dateTime : String
+    val datetime : Date
 ) : Serializable
