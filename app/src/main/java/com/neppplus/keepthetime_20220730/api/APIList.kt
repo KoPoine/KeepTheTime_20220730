@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.api
 
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 import java.io.File
@@ -74,10 +75,11 @@ interface APIList {
         @Field ("nick_name") nick : String
     ) : Call<BasicResponse>
 
-    @FormUrlEncoded
+//    회원 프로필 이미지 수정
+    @Multipart
     @PUT("/user/image")
     fun getRequestEditUserProfile(
-        @Field ("profile_image") profileImg : File
+        @Part ("profile_image") profileImg : MultipartBody.Part
     ) : Call<BasicResponse>
 
 //    user/friend
