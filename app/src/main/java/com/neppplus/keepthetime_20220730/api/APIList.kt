@@ -79,7 +79,7 @@ interface APIList {
     @Multipart
     @PUT("/user/image")
     fun getRequestEditUserProfile(
-        @Part ("profile_image") profileImg : MultipartBody.Part
+        @Part profileImg : MultipartBody.Part
     ) : Call<BasicResponse>
 
 //    user/friend
