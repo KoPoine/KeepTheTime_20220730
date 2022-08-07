@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,8 @@ class MyFriendsFragment : BaseFragment() {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
                 if (response.isSuccessful) {
                     val br = response.body()!!
+
+                    mFriendList.clear()
 
                     mFriendList.addAll(br.data.friends)
                     mFriendAdapter.notifyDataSetChanged()

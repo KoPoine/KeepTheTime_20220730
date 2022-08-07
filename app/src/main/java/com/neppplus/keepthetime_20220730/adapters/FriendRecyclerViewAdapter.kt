@@ -15,6 +15,7 @@ import com.neppplus.keepthetime_20220730.api.ServerApi
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.datas.FriendData
 import com.neppplus.keepthetime_20220730.fragments.InviteFriendsFragment
+import com.neppplus.keepthetime_20220730.fragments.MyFriendsFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -94,17 +95,13 @@ class FriendRecyclerViewAdapter (
                                         Toast.makeText(mContext, "요청을 거절하였습니다.", Toast.LENGTH_SHORT).show()
                                     }
 
-//                                    ((mContext as FriendListActivity)
-//                                        // Activity에서 Fragment를 관리하는 supportFragmentManager 호출
-//                                        .supportFragmentManager
-//                                            // supportFragmentManager에서 실제 Fragment를 TAG를 통해서 찾아오는 코드
-//                                            // Fragment의 경우 f + 몇 번째 프래그먼트인지를 통해서 tag가 자동 생성
-//                                        .findFragmentByTag("f1") as InviteFriendsFragment)
-//                                        .getFriendListFromServer()
+                                    val myFriendsFrag =((mContext as FriendListActivity)
+                                        .supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 0)) as MyFriendsFragment
+                                    myFriendsFrag.getFriendListFromServer()
 
-                                    ((mContext as FriendListActivity)
-                                        .mPagerAdapter.getItem(1) as InviteFriendsFragment)
-                                        .getFriendListFromServer()
+                                    val inviteFrag = ((mContext)
+                                        .supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 1)) as InviteFriendsFragment
+                                    inviteFrag.getFriendListFromServer()
                                 }
                             }
 

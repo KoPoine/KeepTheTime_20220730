@@ -1,6 +1,7 @@
 package com.neppplus.keepthetime_20220730.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,8 +57,13 @@ class InviteFriendsFragment : BaseFragment() {
                 if (response.isSuccessful) {
                     val br = response.body()!!
 
+                    mFriendList.clear()
+
                     mFriendList.addAll(br.data.friends)
                     mFriendAdapter.notifyDataSetChanged()
+                }
+                else{
+
                 }
             }
 
