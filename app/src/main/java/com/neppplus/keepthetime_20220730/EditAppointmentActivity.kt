@@ -8,20 +8,19 @@ import android.view.View
 import android.widget.*
 import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
+import com.naver.maps.map.MapFragment
 import com.neppplus.keepthetime_20220730.adapters.FriendSpinnerAdapter
 import com.neppplus.keepthetime_20220730.adapters.StartPlaceSpinnerAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivityEditAppointmentAcitivtyBinding
 import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.datas.FriendData
 import com.neppplus.keepthetime_20220730.datas.PlaceData
-import com.neppplus.keepthetime_20220730.datas.UserData
 import com.neppplus.keepthetime_20220730.utils.SizeUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class EditAppointmentActivity : BaseActivity() {
 
@@ -164,8 +163,17 @@ class EditAppointmentActivity : BaseActivity() {
         mBinding.saveBtn.setOnClickListener {
 
         }
-    }
 
+//        지도 영역에 손을 대면(SetOnTouchListener) => 스크롤뷰를 정지
+//        대안 : 지도위에 텍스뷰를 겹쳐두고, 텍스트뷰에 손을 대면 => 스크롤이 정지
+        mBinding.scrollHelpTxt.setOnTouchListener { view, motionEvent ->
+
+            mBinding.mainScrollView.requestDisallowInterceptTouchEvent(true)
+
+//            터치 이벤트만 먹히게 할거냐? => no, 뒤에 가려진 지도 동작도 진행 필요
+            return@setOnTouchListener false
+        }
+    }
     override fun setValues() {
         mPlaceAdapter = StartPlaceSpinnerAdapter(mContext, R.layout.place_list_item, mPlaceList)
         mBinding.startPlaceSpinner.adapter = mPlaceAdapter
@@ -175,6 +183,16 @@ class EditAppointmentActivity : BaseActivity() {
 
         getMyPlaceListFromServer()
         getMyFriendListFromServer()
+
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+
+        mapFragment.getMapAsync {
+
+        }
     }
 
     fun getMyPlaceListFromServer() {
