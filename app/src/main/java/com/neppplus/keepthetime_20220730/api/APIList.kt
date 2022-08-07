@@ -11,6 +11,20 @@ interface APIList {
     @GET("/appointment")
     fun getRequestMyAppointment () : Call<BasicResponse>
 
+    @FormUrlEncoded
+    @POST("/appointment")
+    fun getRequestAddAppointment (
+        @Field ("title") title : String,
+        @Field ("datetime") datetime : String,
+        @Field ("start_place") startPlace : String,
+        @Field ("start_latitude") startLatitude : Double,
+        @Field ("start_longitude") startLongitude : Double,
+        @Field ("place") place : String,
+        @Field ("latitude") latitude : Double,
+        @Field ("longitude") longitude : Double,
+        @Field ("friend_list") friendList : String
+    ) : Call<BasicResponse>
+
 //    Search
 //    친구 닉네임으로 검색하기
     @GET("/search/user")

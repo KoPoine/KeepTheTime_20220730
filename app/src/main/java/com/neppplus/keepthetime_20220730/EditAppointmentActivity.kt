@@ -183,6 +183,88 @@ class EditAppointmentActivity : BaseActivity() {
 //        약속 저장하기
         mBinding.saveBtn.setOnClickListener {
 
+//            1. 약속 제목을 정했는가?
+            val inputTitle = mBinding.titleEdt.text.toString()
+            if (inputTitle.isBlank()) {
+                Toast.makeText(mContext, "약속 제목을 정해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            2. (올바른) 날짜 / 시간이 선택 되었는가?
+            if (mBinding.dateTxt.text == "일자 선택") {
+                Toast.makeText(mContext, "약속 일자를 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (mBinding.timeTxt.text == "시간 선택") {
+                Toast.makeText(mContext, "약속 시간을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            지금 시간과 선택된(mSelectedDateTime)과의 시간차를 계산
+            if (mSelectedDateTime.timeInMillis < Calendar.getInstance().timeInMillis) {
+                Toast.makeText(mContext, "현재 시간 이후의 시간으로 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            3. 도착지정을 선택했는가?
+            if (mSelectedLatLng == null) {
+                Toast.makeText(mContext, "도착지점을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            3-1. 약속 장소 명을 기록했는가?
+            val inputPlaceName = mBinding.placeNameEdt.text.toString()
+            if (inputPlaceName.isBlank()) {
+                Toast.makeText(mContext, "약속 장소명을 기입해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+//            선택한 친구들 목록 서버에서 요구하는 모양("1,3,4")으로 변경
+            var friendListStr = ""
+
+//            friendListStr에 들어갈 String을 선택된 친구목록을 이용해 가공
+            for (friend in mSelectedFriendList) {
+                friendListStr = friendListStr + friend.id  // "1" > "13" > "134"
+                friendListStr = friendListStr + ","        // "1," > "1,3," > "1,3,4,"
+            }
+
+//            마지막 ,를 제거 => 글자가 0보다 커야 가능
+            if (friendListStr != "") {
+                friendListStr = friendListStr.substring(0, friendListStr.length - 1)   // "1,3,4," => "1,3,4"
+            }
+
+//            서버가 요구하는 형태(String)로 시간 정보 수정 > "yyyy-MM-dd HH:ss"
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:ss")
+
+
+//           서버에 데이터 전송
+            apiList.getRequestAddAppointment(
+                inputTitle,
+                sdf.format(mSelectedDateTime.time),
+                mSelectedStartPlace.name,
+                mSelectedStartPlace.latitude,
+                mSelectedStartPlace.longitude,
+                inputPlaceName,
+                mSelectedLatLng!!.latitude,
+                mSelectedLatLng!!.longitude,
+                friendListStr
+            ).enqueue(object : Callback<BasicResponse>{
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(mContext, "약속이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+            })
+
         }
 
 //        지도 영역에 손을 대면(SetOnTouchListener) => 스크롤뷰를 정지
