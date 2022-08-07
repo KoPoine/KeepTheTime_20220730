@@ -5,9 +5,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.DatePicker
-import android.widget.TimePicker
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.neppplus.keepthetime_20220730.adapters.FriendSpinnerAdapter
 import com.neppplus.keepthetime_20220730.adapters.StartPlaceSpinnerAdapter
@@ -40,7 +38,8 @@ class EditAppointmentActivity : BaseActivity() {
 //    출발지 장소 저장
     lateinit var mSelectedStartPlace : PlaceData
 
-
+//    초대된 친구들 목록
+    val mSelectedFriendList = ArrayList<FriendData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +107,30 @@ class EditAppointmentActivity : BaseActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
+        }
+
+//        친구 초대 버튼 클릭 이벤트 처리
+        mBinding.inviteBtn.setOnClickListener {
+//            지금 선택된 친구가 누구인지 확인 => 스피너에 선택되어있는 아이템의 포지션 확인
+            val selectedFriend = mFriendList[mBinding.friendSpinner.selectedItemPosition]
+
+//            Toast.makeText(mContext, selectedFriend.nick_name, Toast.LENGTH_SHORT).show()
+
+//            친구추가 버튼을 눌렀는데 > 이미 선택이 되어있을 경우 > 분기 처리를 통해서 작업 진행(반복문)
+            for (friend in mSelectedFriendList) {
+                if (friend == selectedFriend) {
+                    Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+//            텍트스뷰 하나를 동적으로 생성(코틀린에서 생성)
+            val textView = TextView(mContext)
+            textView.text = selectedFriend.nick_name
+
+//            flowLayout에 만들어놓은 텍스트뷰를 추가 > flowLayout가 addView 함수 사용 TextView를 추가
+            mBinding.friendListLayout.addView(textView)
+            mSelectedFriendList.add(selectedFriend)
+
         }
     }
 
