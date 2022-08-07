@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import com.neppplus.keepthetime_20220730.adapters.FriendSpinnerAdapter
 import com.neppplus.keepthetime_20220730.adapters.StartPlaceSpinnerAdapter
@@ -14,6 +15,7 @@ import com.neppplus.keepthetime_20220730.datas.BasicResponse
 import com.neppplus.keepthetime_20220730.datas.FriendData
 import com.neppplus.keepthetime_20220730.datas.PlaceData
 import com.neppplus.keepthetime_20220730.datas.UserData
+import com.neppplus.keepthetime_20220730.utils.SizeUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -117,19 +119,49 @@ class EditAppointmentActivity : BaseActivity() {
 //            Toast.makeText(mContext, selectedFriend.nick_name, Toast.LENGTH_SHORT).show()
 
 //            친구추가 버튼을 눌렀는데 > 이미 선택이 되어있을 경우 > 분기 처리를 통해서 작업 진행(반복문)
-            for (friend in mSelectedFriendList) {
-                if (friend == selectedFriend) {
-                    Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
+//            for (friend in mSelectedFriendList) {
+//                if (friend == selectedFriend) {
+//                    Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
+//                    return@setOnClickListener
+//                }
+//            }
+            if (mSelectedFriendList.contains(selectedFriend)) {
+                Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+
 //            텍트스뷰 하나를 동적으로 생성(코틀린에서 생성)
             val textView = TextView(mContext)
             textView.text = selectedFriend.nick_name
 
+//            우리가 만든 drawable을 TextView 적용 (동적으로 background setting)
+            textView.setBackgroundResource(R.drawable.cumtom_textview_rectangle_bg)
+
+//            텍스트뷰에 패딩을 동적으로 설정 ( kt파일에서 size를 조정 > px단위로 조정 )
+            textView.setPadding(SizeUtil.dpToPx(mContext, 10f))
+
+//            Float(실수), Long(정수) : 작성시 값 뒤에 F / L을 붙여줘야함.
+//            val float : Float = 5.0f
+
+//            텍스트뷰에 동적으로 마진 설정 [도전과제]
+
+//            텍스트뷰 클릭시 추가된 친구목록 삭제 => 텍스트뷰 클릭 이벤트처리
+            textView.setOnClickListener {
+//                초대된 친구 목록(mSelectedFriendList)에서 선택된 친구(selectedFriend)를 삭제
+                mSelectedFriendList.remove(selectedFriend)  // ArrayList의 기능(remove) 활용
+
+//                동적으로 추가된 textView 역시 삭제 (View를 삭제)
+                mBinding.friendListLayout.removeView(textView)
+            }
+
 //            flowLayout에 만들어놓은 텍스트뷰를 추가 > flowLayout가 addView 함수 사용 TextView를 추가
             mBinding.friendListLayout.addView(textView)
             mSelectedFriendList.add(selectedFriend)
+        }
+
+//        약속 저장하기
+        mBinding.saveBtn.setOnClickListener {
 
         }
     }
