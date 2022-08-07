@@ -42,6 +42,11 @@ class AppointmentsFragment : BaseFragment() {
         setValues()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getDataFromServer()
+    }
+
     override fun setupEvents() {
         mBinding.addAppointmentBtn.setOnClickListener {
             val myIntent = Intent(mContext, EditAppointmentActivity::class.java)
