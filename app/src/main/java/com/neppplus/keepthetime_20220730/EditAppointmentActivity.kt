@@ -8,7 +8,12 @@ import android.view.View
 import android.widget.*
 import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.neppplus.keepthetime_20220730.adapters.FriendSpinnerAdapter
 import com.neppplus.keepthetime_20220730.adapters.StartPlaceSpinnerAdapter
 import com.neppplus.keepthetime_20220730.databinding.ActivityEditAppointmentAcitivtyBinding
@@ -41,6 +46,13 @@ class EditAppointmentActivity : BaseActivity() {
 
 //    초대된 친구들 목록
     val mSelectedFriendList = ArrayList<FriendData>()
+
+//    네이버 맵 관련 멤버 변수
+    var mNaverMap : NaverMap? = null
+    var mStartPlaceMarker = Marker()
+    var mSelectedPlaceMarker = Marker()
+    var mSelectedLatLng : LatLng? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +115,15 @@ class EditAppointmentActivity : BaseActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
 
                 mSelectedStartPlace = mPlaceList[position]
+
+                if (mNaverMap != null) {
+                    mStartPlaceMarker.position = LatLng(mSelectedStartPlace.latitude, mSelectedStartPlace.longitude)
+                    mStartPlaceMarker.map = mNaverMap
+
+                    val cameraUpdate = CameraUpdate.scrollTo(LatLng(mSelectedStartPlace.latitude, mSelectedStartPlace.longitude))
+                    mNaverMap!!.moveCamera(cameraUpdate)
+
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -191,7 +212,18 @@ class EditAppointmentActivity : BaseActivity() {
             }
 
         mapFragment.getMapAsync {
+            if (mNaverMap == null) {
+                mNaverMap = it
+            }
 
+            mSelectedPlaceMarker.icon = OverlayImage.fromResource(R.drawable.red_marker)
+
+            it.setOnMapClickListener { pointF, latLng ->
+                mSelectedLatLng = latLng
+
+                mSelectedPlaceMarker.position = latLng
+                mSelectedPlaceMarker.map = it
+            }
         }
     }
 
